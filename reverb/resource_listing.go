@@ -140,27 +140,62 @@ func resourceListing() *schema.Resource {
 					},
 				},
 			},
+			// Computed values
+			"listing_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
 
-// TODO: To implement
 func resourceEventCreate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*client.Client)
 
+	event, err := resourceEventBuild(d, meta)
+	if err != nil {
+		return fmt.Errorf("failed to build event: %w", err)
+	}
+
+	id, err := client.Create(event)
+	if err != nil {
+		return fmt.Errorf("failed to create event: %w", err)
+	}
+
+	d.SetId(id)
+	d.Set("listing_id", id) // do we need to set that?
+
 	return nil
 }
 
-// TODO: To implement
 func resourceEventRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*client.Client)
 
+	event, err := client.Read(d.Id())
+	if err != nil {
+		return fmt.Errorf("failed to read event: %w", err)
+	}
+
+	// TODO: To implement all fields
+	d.Set("make", event.Make)
+
 	return nil
 }
 
-// TODO: To implement
 func resourceEventUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*client.Client)
+
+	event, err := resourceEventBuild(d, meta)
+	if err != nil {
+		return fmt.Errorf("failed to build event: %w", err)
+	}
+
+	id, err := client.Update(d.Id(), event)
+	if err != nil {
+		return fmt.Errorf("failed to update event: %w", err)
+	}
+
+	d.SetId(id)
 
 	return nil
 }

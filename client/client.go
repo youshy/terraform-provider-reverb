@@ -23,6 +23,24 @@ func NewClient(token string) *Client {
 	}
 }
 
+// TODO: To implement
+func (c *Client) Create(event *Event) (string, error) {
+
+	return "", nil
+}
+
+// TODO: To implement
+func (c *Client) Read(id string) (Event, error) {
+
+	return Event{}, nil
+}
+
+// TODO: To implement
+func (c *Client) Update(id string, event *Event) (string, error) {
+
+	return "", nil
+}
+
 func (c *Client) do(req *http.Request) ([]byte, error) {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.Token))
 	req.Header.Set("Accept-Version", "3.0")
