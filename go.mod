@@ -2,7 +2,10 @@ module github.com/youshy/terraform-provider-reverb
 
 go 1.17
 
-require github.com/hashicorp/terraform-plugin-sdk v1.17.2
+require (
+	github.com/gofrs/uuid v4.0.0+incompatible
+	github.com/hashicorp/terraform-plugin-sdk v1.17.2
+)
 
 require (
 	cloud.google.com/go v0.65.0 // indirect

@@ -1,10 +1,14 @@
 package client
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 // Default Reverb API host
@@ -25,8 +29,28 @@ func NewClient(token string) *Client {
 
 // TODO: To implement
 func (c *Client) Create(event *Event) (string, error) {
+	body, err := json.Marshal(event)
+	if err != nil {
+		return "", err
+	}
 
-	return "", nil
+	buildUri := fmt.Sprintf("%s/listings", HostURL)
+
+	req, err := http.NewRequest(http.MethodPost, buildUri, bytes.NewBuffer(body))
+	if err != nil {
+		return "", err
+	}
+
+	// TODO: does this endpoint return anything?
+	_, err = c.do(req)
+	if err != nil {
+		return "", err
+	}
+
+	// in case it doesn't
+	uid, _ := uuid.NewV4()
+
+	return uid.String(), nil
 }
 
 // TODO: To implement
