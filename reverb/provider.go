@@ -20,6 +20,7 @@ func Provider() *schema.Provider {
 			"reverb_categories":        dataSourceCategories(),
 			"reverb_condition":         dataSourceCondition(),
 			"reverb_shipping_profiles": dataSourceShippingProfiles(),
+			"reverb_shipping_regions":  dataSourceShippingRegions(),
 		},
 	}
 

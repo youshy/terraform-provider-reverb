@@ -7,9 +7,6 @@ import (
 	"github.com/youshy/terraform-provider-reverb/client"
 )
 
-// All valid conditions accepted by the Reverb API
-var conditions = []string{"nonfunctioning", "poor", "fair", "good", "verygood", "excellent", "mint", "bstock", "brandnew"}
-
 func resourceListing() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceEventCreate,
@@ -314,8 +311,8 @@ func isValidCondition(val interface{}, key string) ([]string, []error) {
 	v := val.(string)
 	var errs []error
 
-	if ok := contains(conditions, v); !ok {
-		errs = append(errs, fmt.Errorf("%s is an invalid condition, available are %s", v, conditions))
+	if ok := contains(client.ConditionsOnly(), v); !ok {
+		errs = append(errs, fmt.Errorf("%s is an invalid condition, available are %s", v, client.ConditionsOnly()))
 	}
 
 	return nil, errs
