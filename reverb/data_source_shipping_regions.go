@@ -7,16 +7,26 @@ func dataSourceShippingRegions() *schema.Resource {
 		Read: dataSourceShippingRegionsRead,
 
 		Schema: map[string]*schema.Schema{
-			"name": {
-				Type: schema.TypeString,
-			},
-			"id": {
-				Type: schema.TypeString,
+			"shipping_regions": {
+				Type: schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"code": {
+							Type: schema.TypeString,
+						},
+						"name": {
+							Type: schema.TypeString,
+						},
+						"region_type": {
+							Type: schema.TypeString,
+						},
+					},
+				},
 			},
 		},
 	}
 }
 
 func dataSourceShippingRegionsRead(d *schema.ResourceData, meta interface{}) error {
-
+	return nil
 }

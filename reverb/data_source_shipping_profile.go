@@ -7,16 +7,23 @@ func dataSourceShippingProfiles() *schema.Resource {
 		Read: dataSourceShippingProfilesRead,
 
 		Schema: map[string]*schema.Schema{
-			"name": {
-				Type: schema.TypeString,
-			},
-			"id": {
-				Type: schema.TypeString,
+			"shipping_profiles": {
+				Type: schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": {
+							Type: schema.TypeString,
+						},
+						"id": {
+							Type: schema.TypeString,
+						},
+					},
+				},
 			},
 		},
 	}
 }
 
 func dataSourceShippingProfilesRead(d *schema.ResourceData, meta interface{}) error {
-
+	return nil
 }

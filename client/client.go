@@ -25,7 +25,6 @@ func NewClient(token string) *Client {
 	}
 }
 
-// TODO: To implement
 func (c *Client) Create(event *Event) (string, error) {
 	event.Condition = swapConditionToUUID(event.Condition)
 
@@ -41,7 +40,7 @@ func (c *Client) Create(event *Event) (string, error) {
 		return "", err
 	}
 
-	res, err := c.do(req)
+	res, err := c.doWithAuth(req)
 	if err != nil {
 		return "", err
 	}
@@ -67,7 +66,7 @@ func (c *Client) Read(id string) (Event, error) {
 		return Event{}, nil
 	}
 
-	res, err := c.do(req)
+	res, err := c.doWithAuth(req)
 	if err != nil {
 		return Event{}, nil
 	}
@@ -97,7 +96,7 @@ func (c *Client) Update(id string, event *Event) (string, error) {
 		return "", err
 	}
 
-	res, err := c.do(req)
+	res, err := c.doWithAuth(req)
 	if err != nil {
 		return "", err
 	}
@@ -114,8 +113,12 @@ func (c *Client) Update(id string, event *Event) (string, error) {
 	return response.Id, nil
 }
 
-func (c *Client) do(req *http.Request) ([]byte, error) {
+func (c *Client) doWithAuth(req *http.Request) ([]byte, error) {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.Token))
+	return c.do(req)
+}
+
+func (c *Client) do(req *http.Request) ([]byte, error) {
 	req.Header.Set("Accept-Version", "3.0")
 	req.Header.Set("Content-Type", "application/hal+json")
 

@@ -24,7 +24,7 @@ func resourceListing() *schema.Resource {
 			},
 			"categories": {
 				Type:     schema.TypeSet,
-				Optional: true,
+				Required: true,
 				Computed: true,
 				MaxItems: 2,
 				Elem: &schema.Resource{
@@ -65,7 +65,7 @@ func resourceListing() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"sku": {
+			"sku": { // unique identifier for the listing, set by the user, can be any characters.
 				Type:     schema.TypeString,
 				Optional: true,
 			},
